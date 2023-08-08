@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:medical_app/constants.dart';
 import 'package:medical_app/screens/loginscreen.dart';
-import 'package:medical_app/screens/splashscreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class FirstScreen extends StatelessWidget {
+class FirstScreen extends StatefulWidget {
+  @override
+  _FirstScreenState createState() => _FirstScreenState();
+}
+
+class _FirstScreenState extends State<FirstScreen> {
   final ButtonStyle commonButtonStyle = ElevatedButton.styleFrom(
     primary: Colors.white,
     onPrimary: Color(0xFF22C7B8),
     elevation: 0,
-    side: BorderSide(color: grey, width: 1),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
+    side: BorderSide(color: grey, width: 1),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
     // Add border
   );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -32,19 +37,19 @@ class FirstScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () => _navigateToLoginScreen(context, 'Doctor'),
+                  onPressed: () => _navigateToScreen(context, 'Doctor'),
                   child: Text('Doctor'),
                   style: commonButtonStyle,
                 ),
                 SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: () => _navigateToLoginScreen(context, 'Receptionist'),
+                  onPressed: () => _navigateToScreen(context, 'Receptionist'),
                   child: Text('Receptionist'),
                   style: commonButtonStyle,
                 ),
                 SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: () => _navigateToLoginScreen(context, 'Nurse'),
+                  onPressed: () => _navigateToScreen(context, 'Nurse'),
                   child: Text('Nurse'),
                   style: commonButtonStyle,
                 ),
@@ -55,19 +60,19 @@ class FirstScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () => _navigateToLoginScreen(context, 'Analysis Employee'),
+                  onPressed: () => _navigateToScreen(context, 'Analysis Employee'),
                   child: Text('Analysis Employee'),
                   style: commonButtonStyle,
                 ),
                 SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: () => _navigateToLoginScreen(context, 'Manager'),
+                  onPressed: () => _navigateToScreen(context, 'Manager'),
                   child: Text('Manager'),
                   style: commonButtonStyle,
                 ),
                 SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: () => _navigateToLoginScreen(context, 'HR'),
+                  onPressed: () => _navigateToScreen(context, 'HR'),
                   child: Text('HR'),
                   style: commonButtonStyle,
                 ),
@@ -79,11 +84,14 @@ class FirstScreen extends StatelessWidget {
     );
   }
 
-  void _navigateToLoginScreen(BuildContext context, String option) {
+  void _navigateToScreen(BuildContext context, String option) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selectedOption', option); // Save the selected option
+
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginScreen(option: option), // Pass the selected option to the LoginScreen widget
+        builder: (context) => LoginScreen(),
       ),
     );
   }

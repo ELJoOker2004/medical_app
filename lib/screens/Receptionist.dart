@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:medical_app/screens/attendancescreen.dart';
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({Key? key});
+class ReceptionistScreen extends StatelessWidget {
+  const ReceptionistScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class MainScreen extends StatelessWidget {
       ),
       body: GridView.count(
         crossAxisCount: 2,
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0), 
         children: [
           CustomCard(
             title: 'Calls',

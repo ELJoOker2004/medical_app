@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medical_app/constants.dart';
-import 'package:medical_app/screens/homescreen.dart';
+import 'package:medical_app/screens/AnalysisEmployee.dart';
+import 'package:medical_app/screens/HR.dart';
+import 'package:medical_app/screens/Manager.dart';
+import 'package:medical_app/screens/Nurse.dart';
+import 'package:medical_app/screens/Receptionist.dart';
+import 'package:medical_app/screens/doctor.dart';
+import 'package:medical_app/screens/firstscreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
-  final String option; // Add a variable to hold the selected option
-
-  LoginScreen({required this.option}); // Constructor that accepts the option
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-
 class _LoginScreenState extends State<LoginScreen> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -41,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Center(
                   child: Text(
-                    "Welcome Back!\n${widget.option}",
+                    "Welcome Back!",
                     style: TextStyle(
                       color: mainColor,
                       fontSize: 26, // Adjust the font size as desired
@@ -66,12 +67,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     // Adjust the width as desired
                     borderRadius: BorderRadius.circular(8.0),
                   ),
+                  // ... (rest of the code remains the same)
                   child: Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 15, right: 10),
                         child: SvgPicture.asset(
-                          phoneicon, // Replace with your SVG icon path
+                          passwordicon,
                           width: 15,
                           height: 15,
                           color: mainColor,
@@ -200,18 +202,39 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       // Get the entered data and navigate to another screen
                       final phoneNumber = _phoneNumberController.text;
                       final password = _passwordController.text;
 
-                      Navigator.push(
+                      // Simulate a login process here (you can use Firebase Auth or any other authentication)
+                      // After successful login, retrieve the stored option and navigate to the desired screen
+
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      String selectedOption = prefs.getString('selectedOption') ?? '';
+
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HomeScreen(
-
-                          ),
+                          builder: (context) {
+                            switch (selectedOption) {
+                              case 'Doctor':
+                                return DoctorScreen();
+                              case 'Receptionist':
+                                return ReceptionistScreen();
+                              case 'Nurse':
+                                return NurseScreen();
+                              case 'Analysis Employee':
+                                return AnalysisEmployeeScreen();
+                              case 'Manager':
+                                return ManagerScreen();
+                              case 'HR':
+                                return HRScreen();
+                              default:
+                                return FirstScreen();
+                            }
+                          },
                         ),
                       );
                     }
@@ -222,14 +245,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   style: ButtonStyle(
                     minimumSize: MaterialStatePropertyAll<Size>(
-                        Size(double.infinity, 48)),
+                      Size(double.infinity, 48),
+                    ),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(9),
                       ),
                     ),
-                    backgroundColor:
-                    MaterialStateProperty.all<Color>(mainColor),
+                    backgroundColor: MaterialStateProperty.all<Color>(mainColor),
                   ),
                 ),
               ],
@@ -239,11 +262,11 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-  bool isNumeric(String value) {
-    if (value == null) {
-      return false;
-    }
-    return double.tryParse(value) != null;
-  }
 }
+bool isNumeric(String value) {
+  if (value == null) {
+    return false;
+  }
+  return double.tryParse(value) != null;
+}
+
