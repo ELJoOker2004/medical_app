@@ -115,13 +115,16 @@ class CustomCard2 extends StatelessWidget {
           child: Container(
             height: height,
             width: width,
-            child: Row( // Change from Column to Row
-
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(width: 50),
+                 // Add some spacing between SVG and text
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center, // Align text to the right
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+
                     Text(
                       mainText,
                       style: TextStyle(
@@ -131,7 +134,7 @@ class CustomCard2 extends StatelessWidget {
                       ),
                     ),
                     if (subText != null) ...[
-                      SizedBox(height: 4),
+                      SizedBox(height: 10), // Increase the gap between text and subText
                       Text(
                         subText!,
                         style: TextStyle(
@@ -140,17 +143,19 @@ class CustomCard2 extends StatelessWidget {
                         ),
                       ),
                     ],
+
                   ],
                 ),
-                 // Add spacing between SVG and text
+                SizedBox(width: 50),
                 Padding(
-                  padding: const EdgeInsets.all(16.0), // Add padding
-                  child:SvgPicture.asset(
+                  padding: const EdgeInsets.all(16.0),
+                  child: SvgPicture.asset(
                     svgIcon,
                     width: 66,
                     height: 66,
                   ),
                 ),
+
               ],
             ),
           ),
@@ -159,6 +164,9 @@ class CustomCard2 extends StatelessWidget {
     );
   }
 }
+
+
+
 
 
 

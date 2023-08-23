@@ -55,7 +55,8 @@ dependencies:
   smooth_page_indicator: ^1.0.1
   card_swiper:
   flutter_rating_bar:
-
+  tie_picker: ^0.0.2
+  image_picker: ^1.0.2
 
 
 dev_dependencies:

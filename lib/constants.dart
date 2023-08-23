@@ -17,6 +17,15 @@ const String mark = 'assets/mark.svg';
 const String arrow = 'assets/arrow.svg';
 const String arrowbtn = 'assets/arrowbtn.svg';
 const String cases = 'assets/cases.svg';
+const String backarrow = 'assets/leftarrow.svg';
+const String falseIcon = 'assets/falseicon.svg';
+const String trueIcon = 'assets/trueicon.svg';
+const String calenderIcon = 'assets/calendericon.svg';
+const String personIcon = 'assets/personicon.svg';
+const String plus = 'assets/plusicon.svg';
+const String cross = 'assets/fi-rr-cross-small.svg';
+const String uploadImage = 'assets/uploadimage.svg';
+const String employee = 'assets/employee.svg';
 
 
 const Color grey = Color(0xFF707070);

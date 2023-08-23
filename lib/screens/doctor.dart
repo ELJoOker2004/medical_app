@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medical_app/constants.dart';
 import 'package:medical_app/screens/attendancescreen.dart';
+import 'package:medical_app/screens/callsscreen.dart';
+import 'package:medical_app/screens/casesscreen.dart';
+import 'package:medical_app/screens/reportsscreen.dart';
+import 'package:medical_app/screens/tasksscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:medical_app/screens/firstscreen.dart';
 import 'package:medical_app/constatns/customcard.dart';
@@ -79,7 +83,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Attendance(),
+                            builder: (context) => callsScreen(),
                           ),
                         );
                       },
@@ -96,7 +100,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Attendance(),
+                            builder: (context) => reportsScreen(),
                           ),
                         );
                       },
@@ -118,7 +122,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Attendance(),
+                            builder: (context) => tasksScreen(),
                           ),
                         );
                       },
@@ -151,14 +155,14 @@ class _DoctorScreenState extends State<DoctorScreen> {
                 height: 145,
                 width: 343,
                 svgIcon: cases, // Replace with the path to your SVG icon
-                mainText: 'New Card',
+                mainText: 'Cases',
                 subText: 'Optional Subtitle',
-                cardColor: Color(0xFFCCCCCC),
+                cardColor: Color(0xFFDC915F),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Attendance(), // Replace with the desired screen widget
+                      builder: (context) => casesScreen(), // Replace with the desired screen widget
                     ),
                   );
                 },

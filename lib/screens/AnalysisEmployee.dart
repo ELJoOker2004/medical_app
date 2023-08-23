@@ -1,99 +1,160 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medical_app/constants.dart';
 import 'package:medical_app/screens/attendancescreen.dart';
+import 'package:medical_app/screens/callsscreen.dart';
+import 'package:medical_app/screens/casesscreen.dart';
+import 'package:medical_app/screens/reportsscreen.dart';
+import 'package:medical_app/screens/tasksscreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:medical_app/screens/firstscreen.dart';
+import 'package:medical_app/constatns/customcard.dart';
 
-class AnalysisEmployeeScreen extends StatelessWidget {
+class AnalysisEmployeeScreen extends StatefulWidget {
   const AnalysisEmployeeScreen({Key? key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Main Screen"),
-        leading: Icon(Icons.ac_unit_sharp),
-      ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        padding: EdgeInsets.all(16.0),
-        children: [
-          CustomCard(
-            title: 'Calls',
-            color: Colors.blue,
-            onTap: () {
-              // Handle card 1 tap
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Attendance()),
-              );
-            },
-          ),
-          CustomCard(
-            title: 'Tasks',
-            color: Colors.green,
-            onTap: () {
-              // Handle card 2 tap
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Attendance()),
-              );
-            },
-          ),
-          CustomCard(
-            title: 'Reports',
-            color: Colors.purple,
-            onTap: () {
-              // Handle card 3 tap
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Attendance()),
-              );
-            },
-          ),
-          CustomCard(
-            title: 'Attendance - Leaving',
-            color: Colors.cyan,
-            onTap: () {
-              // Handle card 4 tap
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Attendance()),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  State<AnalysisEmployeeScreen> createState() => _AnalysisEmployeeScreenState();
 }
 
-class CustomCard extends StatelessWidget {
-  final String title;
-  final Color color;
-  final VoidCallback onTap;
+class _AnalysisEmployeeScreenState extends State<AnalysisEmployeeScreen> {
+  String? selectedOption;
 
-  const CustomCard({
-    required this.title,
-    required this.color,
-    required this.onTap,
-  });
+  // Function to load the selected option from SharedPreferences
+  _loadSelectedOption() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? option = prefs.getString('selectedOption');
+    setState(() {
+      selectedOption = option;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Card(
-        color: color,
-        child: Center(
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+    _loadSelectedOption();
+    return Scaffold(
+      appBar: AppBar(
+        title: Padding(
+          padding: const EdgeInsets.only(top: 5.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Youssef Ayman",
+                style: TextStyle(fontSize: 14, color: Colors.black),
+              ),
+              if (selectedOption != null)
+                Text(
+                  selectedOption!,
+                  style: TextStyle(fontSize: 10, color: mainColor),
+                ),
+            ],
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child: SvgPicture.asset(notificationIcon),
+          )
+        ],
+        leading: SvgPicture.asset('assets/Rectangle 4.svg'),
+        backgroundColor: Colors.white,
+        elevation: 0,
       ),
+      body: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomCard(
+                      height: 192,
+                      width: 163,
+                      svgIcon: cases, // Replace with the path to your SVG icon
+                      mainText: 'Cases',
+                      subText: 'Optional Subtitle',
+                      cardColor: Color(0xFF5F9EDC),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => callsScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    CustomCard(
+                      height: 158,
+                      width: 163,
+                      svgIcon: reports, // Replace with the path to your SVG icon
+                      mainText: 'Reports',
+                      subText: 'Optional Subtitle',
+                      cardColor: Color(0xFF915FDC),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => reportsScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomCard(
+                      height: 158,
+                      width: 163,
+                      svgIcon: tasks, // Replace with the path to your SVG icon
+                      mainText: 'Tasks',
+                      subText: 'Optional Subtitle',
+                      cardColor: Color(0xFF5FDC89),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => tasksScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    CustomCard(
+                      height: 192,
+                      width: 163,
+                      svgIcon: finger, // Replace with the path to your SVG icon
+                      mainText: 'Attendance-Leaving',
+                      subText: 'Optional Subtitle',
+                      cardColor: Color(0xFF5FDCDC),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Attendance(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 20), // Add some space between existing cards and the new card
+
+          ],
+        ),
+      ),
+
+
     );
   }
 }
-
